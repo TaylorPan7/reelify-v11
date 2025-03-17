@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation - Reelify</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="sidebar">
+        <a href="/" class="nav-item">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <span class="text">Home</span>
+        </a>
+        <a href="/video-generator" class="nav-item">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="23 7 16 12 23 17 23 7"></polygon>
+                <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+            </svg>
+            <span class="text">Video Generator</span>
+        </a>
+        <a href="/image-generator" class="nav-item">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+            <span class="text">Image Generator</span>
+        </a>
+        <a href="/captioner" class="nav-item">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+            <span class="text">Captioner</span>
+        </a>
+        <a href="/pricing" class="nav-item">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="1" x2="12" y2="23"></line>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+            <span class="text">Pricing</span>
+        </a>
+        <a href="/socials" class="nav-item">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <span class="text">Socials</span>
+        </a>
+        
+        <div class="theme-selector">
+            <h4>Theme</h4>
+            <div class="theme-options">
+                <div class="theme-option" data-theme="dark">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <span>Dark</span>
+                </div>
+                <div class="theme-option" data-theme="light">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+                    </svg>
+                    <span>Light</span>
+                </div>
+                <div class="theme-option" data-theme="greyscale">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 2a10 10 0 0 1 0 20 10 10 0 0 1 0-20"></path>
+                    </svg>
+                    <span>Greyscale</span>
+                </div>
+                <div class="theme-option" data-theme="high-contrast">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 2v20"></path>
+                    </svg>
+                    <span>High Contrast</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="content">
+        <section class="page-content fade-in">
+            <div class="page-header">
+                <h1>Reelify API Documentation</h1>
+            </div>
+            <div class="page-body">
+                <p>Welcome to the Reelify API documentation. Our API enables you to programmatically access our AI-powered content creation tools.</p>
+                
+                <div class="info-box">
+                    <h4>API Availability</h4>
+                    <p>The API is available to users on our Pro and Enterprise plans. If you're interested in API access, please <a href="/pricing">check our pricing</a> or <a href="/support">contact our sales team</a> for custom enterprise solutions.</p>
+                </div>
+                
+                <h2>Getting Started</h2>
+                
+                <h3>Authentication</h3>
+                <p>All API requests require authentication using an API key. You can generate an API key in your account settings.</p>
+                
+                <div class="code-block">
+                    <pre><code>curl -X GET "https://api.reelify.com/v1/account" \
+-H "Authorization: Bearer YOUR_API_KEY"</code></pre>
+                </div>
+                
+                <h3>Base URL</h3>
+                <p>All API requests should be made to the following base URL:</p>
+                
+                <div class="code-block">
+                    <pre><code>https://api.reelify.com/v1/</code></pre>
+                </div>
+                
+                <h2>Video Generator API</h2>
+                
+                <h3>Generate a Video</h3>
+                <p>Create a new AI-generated video based on a text prompt.</p>
+                
+                <div class="code-block">
+                    <pre><code>curl -X POST https://api.reelify.com/v1/generate-video \
+-H "Authorization: Bearer YOUR_API_KEY" \
+-H "Content-Type: application/json" \
+-d '{
+  "prompt": "Create an engaging product demo video",
+  "duration": 60,
+  "style": "modern"
+}'</code></pre>
+                </div>
+                
+                <h3>Check Video Status</h3>
+                <p>Check the status of a video generation request.</p>
+                
+                <div class="code-block">
+                    <pre><code>GET /videos/{video_id}/status</code></pre>
+                </div>
+                
+                <h3>Retrieve Video</h3>
+                <p>Get the URL to a generated video.</p>
+                
+                <div class="code-block">
+                    <pre><code>GET /videos/{video_id}</code></pre>
+                </div>
+                
+                <h2>Image Generator API</h2>
+                
+                <h3>Generate an Image</h3>
+                <p>Create a new AI-generated image based on a text prompt.</p>
+                
+                <div class="code-block">
+                    <pre><code>POST /images/generate
+
+{
+  "prompt": "A mountain landscape at sunset",
+  "style": "photorealistic",
+  "resolution": "1024x1024"
+}</code></pre>
+                </div>
+                
+                <h3>Retrieve Image</h3>
+                <p>Get the URL to a generated image.</p>
+                
+                <div class="code-block">
+                    <pre><code>GET /images/{image_id}</code></pre>
+                </div>
+                
+                <h2>Captioner API</h2>
+                
+                <h3>Generate Captions</h3>
+                <p>Create captions for a video.</p>
+                
+                <div class="code-block">
+                    <pre><code>POST /captions/generate
+
+{
+  "video_url": "https://example.com/video.mp4",
+  "language": "en",
+  "format": "srt"
+}</code></pre>
+                </div>
+                
+                <h3>Retrieve Captions</h3>
+                <p>Get the URL to generated captions.</p>
+                
+                <div class="code-block">
+                    <pre><code>GET /captions/{caption_id}</code></pre>
+                </div>
+                
+                <h2>Rate Limits</h2>
+                <p>The API enforces rate limits based on your subscription plan:</p>
+                
+                <ul>
+                    <li><strong>Pro Plan:</strong> 100 requests per minute</li>
+                    <li><strong>Enterprise Plan:</strong> Custom limits based on your agreement</li>
+                </ul>
+                
+                <h2>Error Handling</h2>
+                <p>The API uses standard HTTP status codes to indicate the success or failure of a request.</p>
+                
+                <div class="code-block">
+                    <pre><code>// Example error response
+{
+  "error": {
+    "code": "invalid_request",
+    "message": "The prompt is too long. Maximum length is 1000 characters.",
+    "status": 400
+  }
+}</code></pre>
+                </div>
+                
+                <h2>SDKs and Libraries</h2>
+                <p>We provide official client libraries for popular programming languages:</p>
+                
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <div class="resource-content">
+                            <h3>Python SDK</h3>
+                            <p>Official Python library for the Reelify API.</p>
+                            <a href="#" class="resource-link">View documentation</a>
+                        </div>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-content">
+                            <h3>JavaScript SDK</h3>
+                            <p>Official JavaScript/Node.js library for the Reelify API.</p>
+                            <a href="#" class="resource-link">View documentation</a>
+                        </div>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-content">
+                            <h3>Ruby SDK</h3>
+                            <p>Official Ruby library for the Reelify API.</p>
+                            <a href="#" class="resource-link">View documentation</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <h2>Webhooks</h2>
+                <p>Set up webhooks to receive real-time notifications when your resources are created or updated.</p>
+                
+                <div class="code-block">
+                    <pre><code>POST /webhooks
+
+{
+  "url": "https://example.com/webhooks/reelify",
+  "events": ["video.created", "image.created", "caption.created"]
+}</code></pre>
+                </div>
+                
+                <div class="cta-section">
+                    <h3>Need Help?</h3>
+                    <p>If you have any questions about the API, our support team is here to help.</p>
+                    <a href="/support" class="cta-button">Contact Support</a>
+                </div>
+            </div>
+        </section>
+
+        <footer class="main-footer fade-in">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/careers">Careers</a></li>
+                        <li><a href="/press">Press</a></li>
+                        <li><a href="/partners">Partners</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="/video-generator">Video Generator</a></li>
+                        <li><a href="/image-generator">Image Generator</a></li>
+                        <li><a href="/captioner">Captioner</a></li>
+                        <li><a href="/pricing">Pricing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="/blog">Blog</a></li>
+                        <li><a href="/tutorials">Tutorials</a></li>
+                        <li><a href="/support">Support Center</a></li>
+                        <li><a href="/api-docs">API Documentation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="/terms">Terms of Service</a></li>
+                        <li><a href="/privacy">Privacy Policy</a></li>
+                        <li><a href="/cookies">Cookie Policy</a></li>
+                        <li><a href="/gdpr">GDPR Compliance</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Reelify. All rights reserved.</p>
+                <div class="footer-social">
+                    <a href="#" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script src="/static/script.js"></script>
+</body>
+</html> 

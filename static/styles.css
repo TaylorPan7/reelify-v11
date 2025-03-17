@@ -1,0 +1,58 @@
+/* Social Links */
+.socials-section {
+    padding: 2rem;
+    text-align: center;
+}
+
+.social-links {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 400px;
+    margin: 2rem auto;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text-color);
+    background: var(--card-bg);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.social-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.social-icon {
+    width: 32px;
+    height: 32px;
+}
+
+.social-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: var(--text-color);
+}
+
+.social-icon.tiktok svg {
+    fill: #000000;
+}
+
+[data-theme="dark"] .social-icon.tiktok svg {
+    fill: #ffffff;
+}
+
+.social-icon.youtube svg {
+    fill: #FF0000;
+}
+
+.social-link span {
+    font-size: 1.1rem;
+    font-weight: 500;
+} 

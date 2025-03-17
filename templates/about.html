@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Reelify</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="sidebar">
+        <a href="/" class="nav-item">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <span class="text">Home</span>
+        </a>
+        <a href="/video-generator" class="nav-item">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="23 7 16 12 23 17 23 7"></polygon>
+                <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+            </svg>
+            <span class="text">Video Generator</span>
+        </a>
+        <a href="/image-generator" class="nav-item">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+            <span class="text">Image Generator</span>
+        </a>
+        <a href="/captioner" class="nav-item">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+            <span class="text">Captioner</span>
+        </a>
+        <a href="/pricing" class="nav-item">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="1" x2="12" y2="23"></line>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+            <span class="text">Pricing</span>
+        </a>
+        <a href="/socials" class="nav-item">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <span class="text">Socials</span>
+        </a>
+        
+        <div class="theme-selector">
+            <h4>Theme</h4>
+            <div class="theme-options">
+                <div class="theme-option" data-theme="dark">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <span>Dark</span>
+                </div>
+                <div class="theme-option" data-theme="light">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+                    </svg>
+                    <span>Light</span>
+                </div>
+                <div class="theme-option" data-theme="greyscale">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 2a10 10 0 0 1 0 20 10 10 0 0 1 0-20"></path>
+                    </svg>
+                    <span>Greyscale</span>
+                </div>
+                <div class="theme-option" data-theme="high-contrast">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 2v20"></path>
+                    </svg>
+                    <span>High Contrast</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="content">
+        <section class="page-content fade-in">
+            <div class="page-header">
+                <h1>About Us</h1>
+            </div>
+            <div class="page-body">
+                <p>Welcome to Reelify, the leading AI-powered platform for video and image content creation. We're on a mission to democratize content creation and make professional-quality videos accessible to everyone.</p>
+                
+                <h2>Our Story</h2>
+                <p>Founded in 2023, Reelify was born from a simple observation: creating high-quality video content was too time-consuming and technically challenging for most content creators. Our founder, experienced in both AI technology and digital content creation, saw an opportunity to leverage artificial intelligence to solve this problem.</p>
+                
+                <p>What started as a simple tool for automating video editing has evolved into a comprehensive platform that can generate professional videos from a simple text prompt, create stunning images, and automatically caption content for accessibility.</p>
+                
+                <div class="info-box">
+                    <h4>Our Mission</h4>
+                    <p>To empower content creators of all skill levels by providing AI-powered tools that simplify the creation of professional-quality videos and images.</p>
+                </div>
+                
+                <h2>Our Team</h2>
+                <p>We're a startup led by our founder who is passionate about building technology that empowers creativity.</p>
+                
+                <div class="team-member">
+                    <img src="https://via.placeholder.com/150" alt="Taylor Pan">
+                    <div class="team-member-info">
+                        <h4>Taylor Pan</h4>
+                        <p>Founder & CEO</p>
+                        <p>A visionary entrepreneur with a background in AI and content creation, Taylor founded Reelify with the goal of making professional video creation accessible to everyone.</p>
+                    </div>
+                </div>
+                
+                <h2>Our Technology</h2>
+                <p>At the heart of our platform is advanced artificial intelligence that understands text prompts and translates them into visual content. Our system combines several cutting-edge technologies:</p>
+                
+                <ul>
+                    <li><strong>Natural Language Processing (NLP)</strong> to understand the nuances of your content requests</li>
+                    <li><strong>Computer Vision</strong> to select and edit appropriate visual elements</li>
+                    <li><strong>Machine Learning algorithms</strong> that improve over time based on user feedback</li>
+                    <li><strong>Speech-to-Text technology</strong> for accurate automatic captions</li>
+                </ul>
+                
+                <h2>Our Values</h2>
+                <p>We believe in building technology that:</p>
+                
+                <ul>
+                    <li><strong>Empowers Creativity</strong>: Our tools handle the technical aspects so you can focus on creative direction.</li>
+                    <li><strong>Promotes Accessibility</strong>: We're committed to making content creation accessible to everyone, regardless of technical skill.</li>
+                    <li><strong>Respects Privacy</strong>: We maintain strict data privacy standards and are transparent about how we use your data.</li>
+                    <li><strong>Delivers Quality</strong>: We continuously refine our technology to ensure the highest quality output.</li>
+                </ul>
+                
+                <h2>Join Our Journey</h2>
+                <p>We're just getting started on our mission to revolutionize content creation. Whether you're a creator looking to streamline your workflow, an investor interested in the future of AI-driven content, or a talented professional wanting to join our team, we'd love to connect with you.</p>
+                
+                <a href="/contact" class="cta-button">Get in Touch</a>
+            </div>
+        </section>
+
+        <footer class="main-footer fade-in">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/careers">Careers</a></li>
+                        <li><a href="/press">Press</a></li>
+                        <li><a href="/partners">Partners</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="/video-generator">Video Generator</a></li>
+                        <li><a href="/image-generator">Image Generator</a></li>
+                        <li><a href="/captioner">Captioner</a></li>
+                        <li><a href="/pricing">Pricing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="/blog">Blog</a></li>
+                        <li><a href="/tutorials">Tutorials</a></li>
+                        <li><a href="/support">Support Center</a></li>
+                        <li><a href="/api-docs">API Documentation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="/terms">Terms of Service</a></li>
+                        <li><a href="/privacy">Privacy Policy</a></li>
+                        <li><a href="/cookies">Cookie Policy</a></li>
+                        <li><a href="/gdpr">GDPR Compliance</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Reelify. All rights reserved.</p>
+                <div class="footer-social">
+                    <a href="#" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script src="/static/script.js"></script>
+</body>
+</html> 

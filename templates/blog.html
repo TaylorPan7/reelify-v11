@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Reelify</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .article-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        
+        .article-content {
+            position: relative;
+            background-color: var(--bg-color);
+            margin: 40px auto;
+            padding: 60px 40px 40px;
+            width: 90%;
+            max-width: 800px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+                        0 0 0 1px rgba(255, 255, 255, 0.1);
+            max-height: 85vh;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .article-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .article-content::-webkit-scrollbar-track {
+            background: var(--bg-color);
+            border-radius: 4px;
+        }
+        
+        .article-content::-webkit-scrollbar-thumb {
+            background: var(--hover-color);
+            border-radius: 4px;
+        }
+        
+        .close-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            background: var(--bg-color);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+            transition: all 0.2s ease;
+        }
+        
+        .close-button:hover {
+            background-color: var(--hover-color);
+            transform: scale(1.05);
+        }
+        
+        .article-content h2 {
+            margin-top: 0;
+            font-size: 2em;
+            color: var(--text-color);
+            margin-bottom: 1em;
+            line-height: 1.3;
+        }
+        
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 2em;
+            color: var(--text-muted);
+            font-size: 0.95em;
+        }
+        
+        .article-meta .date {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .article-meta .date svg {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .article-content h3 {
+            color: var(--text-color);
+            font-size: 1.5em;
+            margin-top: 1.5em;
+            margin-bottom: 0.75em;
+        }
+        
+        .article-content p {
+            line-height: 1.7;
+            margin-bottom: 1.2em;
+            color: var(--text-color);
+            font-size: 1.1em;
+        }
+        
+        .article-content ul, .article-content ol {
+            margin-bottom: 1.5em;
+            padding-left: 1.8em;
+        }
+        
+        .article-content li {
+            margin-bottom: 0.8em;
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+        
+        @media (max-width: 768px) {
+            .article-content {
+                width: 95%;
+                padding: 50px 25px 25px;
+                margin: 20px auto;
+                max-height: 90vh;
+            }
+            
+            .close-button {
+                top: 15px;
+                right: 15px;
+                width: 32px;
+                height: 32px;
+                font-size: 20px;
+            }
+            
+            .article-content h2 {
+                font-size: 1.75em;
+            }
+            
+            .article-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, var(--bg-color) 0%, var(--hover-color) 100%);
+            border-radius: 24px;
+            padding: 3rem;
+            margin: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
+            pointer-events: none;
+        }
+
+        .cta-section h3 {
+            color: var(--text-color);
+            font-size: 2em;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .cta-section p {
+            color: var(--text-muted);
+            font-size: 1.1em;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .newsletter-form input[type="email"] {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            color: var(--text-color);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .newsletter-form input[type="email"]::placeholder {
+            color: var(--text-muted);
+        }
+
+        .newsletter-form input[type="email"]:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .newsletter-form .submit-btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            background: var(--primary-color);
+            color: #fff;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .newsletter-form .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            background: var(--accent-color);
+        }
+
+        @media (max-width: 768px) {
+            .cta-section {
+                padding: 2rem;
+                margin: 2rem 0;
+            }
+
+            .cta-section h3 {
+                font-size: 1.75em;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .newsletter-form input[type="email"],
+            .newsletter-form .submit-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar">
+        <a href="/" class="nav-item">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <span class="text">Home</span>
+        </a>
+        <a href="/video-generator" class="nav-item">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="23 7 16 12 23 17 23 7"></polygon>
+                <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+            </svg>
+            <span class="text">Video Generator</span>
+        </a>
+        <a href="/image-generator" class="nav-item">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+            <span class="text">Image Generator</span>
+        </a>
+        <a href="/captioner" class="nav-item">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+            <span class="text">Captioner</span>
+        </a>
+        <a href="/pricing" class="nav-item">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="1" x2="12" y2="23"></line>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+            <span class="text">Pricing</span>
+        </a>
+        <a href="/socials" class="nav-item">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <span class="text">Socials</span>
+        </a>
+        
+        <div class="theme-selector">
+            <h4>Theme</h4>
+            <div class="theme-options">
+                <div class="theme-option" data-theme="dark">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <span>Dark</span>
+                </div>
+                <div class="theme-option" data-theme="light">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+                    </svg>
+                    <span>Light</span>
+                </div>
+                <div class="theme-option" data-theme="greyscale">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 2a10 10 0 0 1 0 20 10 10 0 0 1 0-20"></path>
+                    </svg>
+                    <span>Greyscale</span>
+                </div>
+                <div class="theme-option" data-theme="high-contrast">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 2v20"></path>
+                    </svg>
+                    <span>High Contrast</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="content">
+        <section class="page-content fade-in">
+            <div class="page-header">
+                <h1>Blog</h1>
+            </div>
+            <div class="page-body">
+                <p>Stay up to date with the latest news, tips, and insights from Reelify. Our blog covers everything from AI technology trends to best practices for content creation.</p>
+                
+                <div class="resources-grid">
+                    <div class="resource-card" onclick="showArticle('future-ai')">
+                        <div class="resource-content">
+                            <h3>The Future of AI in Content Creation</h3>
+                            <p>March 15, 2023</p>
+                            <p>Explore how artificial intelligence is revolutionizing the way we create and consume video content, and what this means for content creators.</p>
+                            <a href="#" class="resource-link">Read more</a>
+                        </div>
+                    </div>
+                    
+                    <div class="resource-card" onclick="showArticle('social-media-tips')">
+                        <div class="resource-content">
+                            <h3>5 Tips for Creating Engaging Social Media Videos</h3>
+                            <p>March 8, 2023</p>
+                            <p>Learn how to create videos that capture attention and drive engagement on platforms like TikTok and Instagram.</p>
+                            <a href="#" class="resource-link">Read more</a>
+                        </div>
+                    </div>
+                    
+                    <div class="resource-card" onclick="showArticle('ai-strategy')">
+                        <div class="resource-content">
+                            <h3>How to Use AI to Scale Your Content Strategy</h3>
+                            <p>February 28, 2023</p>
+                            <p>Discover how content creators are using AI tools to produce more high-quality content in less time.</p>
+                            <a href="#" class="resource-link">Read more</a>
+                        </div>
+                    </div>
+                    
+                    <div class="resource-card" onclick="showArticle('video-accessibility')">
+                        <div class="resource-content">
+                            <h3>The Importance of Video Accessibility</h3>
+                            <p>February 15, 2023</p>
+                            <p>Why adding captions to your videos isn't just good practice—it's essential for reaching a wider audience.</p>
+                            <a href="#" class="resource-link">Read more</a>
+                        </div>
+                    </div>
+                    
+                    <div class="resource-card" onclick="showArticle('behind-scenes')">
+                        <div class="resource-content">
+                            <h3>Behind the Scenes: How Our AI Video Generator Works</h3>
+                            <p>February 7, 2023</p>
+                            <p>A deep dive into the technology that powers our AI video generation platform.</p>
+                            <a href="#" class="resource-link">Read more</a>
+                        </div>
+                    </div>
+                    
+                    <div class="resource-card" onclick="showArticle('case-study')">
+                        <div class="resource-content">
+                            <h3>Case Study: How TechStart Increased Engagement by 200%</h3>
+                            <p>January 25, 2023</p>
+                            <p>See how a leading tech startup used our AI tools to transform their content strategy and achieve remarkable results.</p>
+                            <a href="#" class="resource-link">Read more</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Article Popups -->
+                <div id="future-ai" class="article-popup">
+                    <div class="article-content">
+                        <button class="close-button" onclick="hideArticle('future-ai')">&times;</button>
+                        <h2>The Future of AI in Content Creation</h2>
+                        <div class="article-meta">
+                            <div class="date">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                                <span>March 15, 2025</span>
+                            </div>
+                            <div class="reading-time">5 min read</div>
+                        </div>
+                        <div class="article-body">
+                            <p>As artificial intelligence continues to evolve, its impact on content creation is becoming increasingly significant. At Reelify, we're at the forefront of this transformation, developing tools that empower creators to produce high-quality content more efficiently than ever before.</p>
+                            
+                            <h3>The Current State of AI in Content Creation</h3>
+                            <p>Today's AI-powered tools can generate videos, write scripts, create images, and even edit content with minimal human intervention. This technology is not replacing human creativity but rather enhancing it, allowing creators to focus on strategy and creative direction while automating technical aspects.</p>
+                            
+                            <h3>Key Trends Shaping the Future</h3>
+                            <ul>
+                                <li>Natural Language Processing improvements leading to better script generation</li>
+                                <li>Advanced video synthesis creating more realistic and engaging content</li>
+                                <li>Personalization at scale through AI-driven content adaptation</li>
+                                <li>Real-time content optimization based on audience engagement</li>
+                            </ul>
+                            
+                            <h3>The Role of Human Creativity</h3>
+                            <p>While AI tools are becoming more sophisticated, human creativity remains irreplaceable. The future of content creation lies in the synergy between human ingenuity and AI capabilities, creating a workflow that combines the best of both worlds.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="social-media-tips" class="article-popup">
+                    <div class="article-content">
+                        <button class="close-button" onclick="hideArticle('social-media-tips')">×</button>
+                        <h2>5 Tips for Creating Engaging Social Media Videos</h2>
+                        <p>March 8, 2023</p>
+                        <p>In today's fast-paced social media landscape, creating videos that stop the scroll is more important than ever. Here are our top tips for creating engaging social media content:</p>
+                        <h3>1. Hook Viewers in the First 3 Seconds</h3>
+                        <p>With short attention spans on social media, your opening needs to be compelling. Use Reelify's AI to generate attention-grabbing intros that immediately communicate value to viewers.</p>
+                        <h3>2. Optimize for Silent Viewing</h3>
+                        <p>85% of social media videos are watched without sound. Use our captioning tool to ensure your message comes across clearly, even on mute.</p>
+                        <h3>3. Keep it Concise</h3>
+                        <p>Short-form content continues to dominate social media. Aim for videos under 60 seconds, with your key message delivered in the first 15 seconds.</p>
+                        <h3>4. Maintain Visual Consistency</h3>
+                        <p>Use consistent branding, colors, and styling across your videos to build recognition. Our AI tools can help maintain this consistency automatically.</p>
+                        <h3>5. Call to Action</h3>
+                        <p>End every video with a clear call to action. Whether it's "follow for more," "learn more," or "shop now," give viewers a next step.</p>
+                    </div>
+                </div>
+
+                <div id="ai-strategy" class="article-popup">
+                    <div class="article-content">
+                        <button class="close-button" onclick="hideArticle('ai-strategy')">×</button>
+                        <h2>How to Use AI to Scale Your Content Strategy</h2>
+                        <p>February 28, 2023</p>
+                        <p>Content creation can be time-consuming and resource-intensive. Here's how AI can help you scale your content strategy effectively:</p>
+                        <h3>1. Automated Content Generation</h3>
+                        <p>Reelify's AI tools can help you generate multiple pieces of content quickly. Our platform can create variations of your videos and images, allowing you to test different approaches and find what resonates best with your audience.</p>
+                        <h3>2. Content Repurposing</h3>
+                        <p>Turn one piece of content into many by automatically adapting it for different platforms and formats. For example, transform a long-form video into shorter clips for social media, complete with captions and optimized aspect ratios.</p>
+                        <h3>3. Consistent Brand Voice</h3>
+                        <p>Our AI learns your brand's style and tone, ensuring consistency across all generated content. This helps maintain brand identity even as you scale up production.</p>
+                        <h3>4. Data-Driven Optimization</h3>
+                        <p>Use AI-powered analytics to understand what content performs best and automatically generate more content following successful patterns.</p>
+                    </div>
+                </div>
+
+                <div id="video-accessibility" class="article-popup">
+                    <div class="article-content">
+                        <button class="close-button" onclick="hideArticle('video-accessibility')">×</button>
+                        <h2>The Importance of Video Accessibility</h2>
+                        <p>February 15, 2023</p>
+                        <p>Making your videos accessible isn't just about compliance—it's about reaching a wider audience and creating better content for everyone. Here's why accessibility matters:</p>
+                        <h3>The Numbers Don't Lie</h3>
+                        <p>Over 466 million people worldwide have disabling hearing loss, and 85% of social media videos are watched without sound. Adding captions to your videos isn't just an accessibility feature—it's essential for reaching your full audience.</p>
+                        <h3>Benefits of Accessible Videos</h3>
+                        <ul>
+                            <li>Increased engagement from viewers in sound-sensitive environments</li>
+                            <li>Better comprehension for non-native speakers</li>
+                            <li>Improved SEO through searchable caption text</li>
+                            <li>Compliance with accessibility regulations</li>
+                        </ul>
+                        <h3>How Reelify Helps</h3>
+                        <p>Our AI-powered captioning tool automatically generates accurate captions for your videos, making accessibility easy and efficient. Plus, our system can translate captions into multiple languages, helping you reach global audiences.</p>
+                    </div>
+                </div>
+
+                <div id="behind-scenes" class="article-popup">
+                    <div class="article-content">
+                        <button class="close-button" onclick="hideArticle('behind-scenes')">×</button>
+                        <h2>Behind the Scenes: How Our AI Video Generator Works</h2>
+                        <p>February 7, 2023</p>
+                        <p>Ever wondered how Reelify turns your text prompts into engaging videos? Let's peek behind the curtain at our AI technology:</p>
+                        <h3>The Process</h3>
+                        <ol>
+                            <li><strong>Natural Language Processing</strong>: Our AI first analyzes your prompt to understand the content, tone, and style you're looking for.</li>
+                            <li><strong>Scene Generation</strong>: The system creates a storyboard, planning out each scene based on your requirements.</li>
+                            <li><strong>Visual Asset Selection</strong>: AI selects appropriate visuals from our vast library or generates new ones as needed.</li>
+                            <li><strong>Motion and Transitions</strong>: The system applies dynamic motion and smooth transitions between scenes.</li>
+                            <li><strong>Audio Integration</strong>: Background music and sound effects are selected and synchronized with the visuals.</li>
+                        </ol>
+                        <h3>Continuous Learning</h3>
+                        <p>Our AI system continuously learns from user feedback and preferences, getting better with each video generated. This means more accurate results and better understanding of creative intent over time.</p>
+                    </div>
+                </div>
+
+                <div id="case-study" class="article-popup">
+                    <div class="article-content">
+                        <button class="close-button" onclick="hideArticle('case-study')">×</button>
+                        <h2>Case Study: How TechStart Increased Engagement by 200%</h2>
+                        <p>January 25, 2023</p>
+                        <h3>The Challenge</h3>
+                        <p>TechStart, a growing SaaS startup, needed to increase their social media presence but lacked the resources for a full-time video production team.</p>
+                        <h3>The Solution</h3>
+                        <p>Using Reelify's AI video generation platform, TechStart implemented a comprehensive content strategy:</p>
+                        <ul>
+                            <li>Daily product feature highlights</li>
+                            <li>Weekly tutorial videos</li>
+                            <li>Customer success stories</li>
+                            <li>Tech tips and industry insights</li>
+                        </ul>
+                        <h3>The Results</h3>
+                        <p>After three months of using Reelify:</p>
+                        <ul>
+                            <li>200% increase in social media engagement</li>
+                            <li>150% increase in video content output</li>
+                            <li>45% reduction in content production costs</li>
+                            <li>35% increase in website traffic from social media</li>
+                        </ul>
+                        <h3>Key Takeaways</h3>
+                        <p>TechStart's success demonstrates how AI-powered content creation can help businesses scale their content strategy efficiently while maintaining quality and consistency.</p>
+                    </div>
+                </div>
+
+                <div class="cta-section">
+                    <h3>Stay in the Loop</h3>
+                    <p>Get exclusive AI insights, content creation tips, and the latest Reelify updates delivered straight to your inbox.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Enter your email address" required>
+                        <button type="submit" class="submit-btn">Subscribe Now</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <footer class="main-footer fade-in">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/careers">Careers</a></li>
+                        <li><a href="/press">Press</a></li>
+                        <li><a href="/partners">Partners</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="/video-generator">Video Generator</a></li>
+                        <li><a href="/image-generator">Image Generator</a></li>
+                        <li><a href="/captioner">Captioner</a></li>
+                        <li><a href="/pricing">Pricing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="/blog">Blog</a></li>
+                        <li><a href="/tutorials">Tutorials</a></li>
+                        <li><a href="/support">Support Center</a></li>
+                        <li><a href="/api-docs">API Documentation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="/terms">Terms of Service</a></li>
+                        <li><a href="/privacy">Privacy Policy</a></li>
+                        <li><a href="/cookies">Cookie Policy</a></li>
+                        <li><a href="/gdpr">GDPR Compliance</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Reelify. All rights reserved.</p>
+                <div class="footer-social">
+                    <a href="#" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script src="/static/script.js"></script>
+    <script>
+    function showArticle(id) {
+        document.getElementById(id).style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function hideArticle(id) {
+        document.getElementById(id).style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    // Close popup when clicking outside the content
+    window.onclick = function(event) {
+        if (event.target.classList.contains('article-popup')) {
+            event.target.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    }
+    </script>
+</body>
+</html> 
